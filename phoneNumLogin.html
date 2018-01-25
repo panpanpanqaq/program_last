@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="Expires" content="0">
+		<meta http-equiv="Pragma" content="no-cache">
+		<meta http-equiv="Cache-control" content="no-cache">
+		<meta http-equiv="Cache" content="no-cache">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="dist/css/phoneNumLogin.css"/>
+	</head>
+	<body>
+		<div id="loginBox">
+			<img src="img/loginLogo.png"/></br>
+			<a href="#" class="loginWayOne">努比亚账号登录</a>|<a href="#" class="loginWayTwo">手机验证码登录</a>
+			<form>
+				<p>
+					<input id="tell" type="text" placeholder="   手机号码"/>
+					<span id="tellMsg"></span>
+				</p>
+				<p>
+					<input id="checkNumTxt" type="text" placeholder="   请输入验证码（不区分大小写）"/>
+					<input id="checkNum" type="text"/>
+					<span id="ensureMsg"></span>
+				</p>
+				<p>
+					<input type="text" id="phoneCheck" placeholder="   请输入手机验证码"/>
+					<input id="getCheckNum" type="text"/>
+				</p>
+				<p><input type="submit" id="loginBtn" value="立即登录"/></p>
+			</form>
+			<p id="singIn">
+				<a href="#" class="newNumber">注册新账号</a>|<a href="#" class="forget">忘记密码？</a>
+			</p>
+			<p id="method">
+				<span>其他方式登录：</span>
+				<a href="#" id="methodThree"></a>
+				<a href="#" id="methodFour"></a>	
+				<a href="#" id="methodTwo"></a>	
+				<a href="#" id="methodOne"></a>
+			</p>
+		</div>
+	</body>
+</html>
+<script type="text/javascript">
+	function $(id){
+	return document.getElementById(id)
+}
+	function checkAll(type,str){
+	switch(type){
+		case "username": var reg=/\w{5,8}/;break;
+		case "email": var reg=/^\w+@\w+\.(com|cn)$/;break;
+		case "password": var reg=/\w{8,16}/;break;
+		case "tell": var reg=/^1+\d{10}/;break;
+	}
+	if(reg){
+		return reg.test(str);
+	}else{
+		return false;
+	}
+}
+function checkAllAndUi(type,str,domObj){
+	
+	if(checkAll(type,str)){
+		domObj.style.color="green";
+		domObj.innerHTML="√";
+	}else{
+		domObj.style.color="red";
+		domObj.innerHTML="×";
+	}
+}
+//随机生成四位数验证码
+	function checkNum(){
+		var arr=[0,1,2,3,4,5,6,7,8,9,"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+		var result=new Array();
+		var index;
+		var wantStr="";
+		for(var i=0;i<4;i++){
+			index=parseInt(Math.random()*62);
+			wantStr+=arr[index];
+		}
+		 $("checkNum").value=wantStr; 
+	}
+window.onload=function(){
+	checkNum();
+	$("tell").onblur=function(){
+		checkAllAndUi("tell",this.value,$("tellMsg"));
+		}
+	$("checkNumTxt").onblur=function(){
+		if(this.value.length===0){
+			$("ensureMsg").style.color="red";
+			$("ensureMsg").innerHTML="请填写信息！";
+		}
+		if (this.value.toString()==$("checkNum").value.toString()){
+			$("ensureMsg").style.color="green";
+			$("ensureMsg").innerHTML="√";
+		}
+		else{
+			$("ensureMsg").style.color="red";
+			$("ensureMsg").innerHTML="验证码输入有误！";
+		}
+	}
+	$("checkNum").onclick=function(){
+	 	checkNum();//点击系统生成验证码的input框随机生成四位数验证码（包含数字字母）
+	 }
+}
+</script>

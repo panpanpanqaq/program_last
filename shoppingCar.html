@@ -6,11 +6,10 @@
 	<meta http-equiv="Pragma" content="no-cache">
 	<meta http-equiv="Cache-control" content="no-cache">
 	<meta http-equiv="Cache" content="no-cache">
-	<title>index</title>
-	<link rel="stylesheet" type="text/css" href="dist/css/main.css">
+	<title>shoppingCar</title>
+	<link rel="stylesheet" type="text/css" href="dist/css/shoppingCar.css">
 </head>
 <body>
-	<div id="goTopBtn">Go Top</div>
 <!---header -->
 <header>
 		<a href="#" class="logo"><img src="img/logo.png"/></a>
@@ -28,7 +27,6 @@
 
 <!-- 首页轮播图 -->
 <div id="indexlunbotu" style="position: relative;">
-	<div id="indexbg"></div>
 	<div id="zzc">
 		<a id="phonelist">
 			<img src="img/phoneimg1.png" />
@@ -56,14 +54,64 @@
 		</a>
 	</div>
 </div>
-<!-- section -->
-<div class="section">
-	<a href="#" style="background-image: url(img/section1.jpg);
-	background-size: 100% 100%;"><li>努比亚Z17S无边框全面屏 未来全面而来</li></a>
-	<a href="#" style="background-image: url(img/section2.jpg);
-	background-size: 100% 100%;"><li>努比亚 UI 5.0</li></a>
-	<a href="#" style="background-image: url(img/section1.jpg);
-	background-size: 100% 100%;"><li>努比亚摄影长廊</li></a>
+<!--process-->
+<div id="process">
+	<img src="img/shoppingCarBg.png"/>
+</div>
+<div id="shoppingCar">
+	<table border="1" cellspacing="0" cellpadding="0">
+		<tr style="background-color: #f7f9f9;">
+			<th width="180px" height="53px">商品</th>
+			<th width="455px"></th>
+			<th width="130px">单价</th>
+			<th width="190px">数量</th>
+			<th width="145px">小计</th>
+			<th width="72px">操作</th>
+		</tr>
+		<tr>
+			<td>
+				<img src="img/shopCarImg1.jpg" width="100px" height="100px"/>
+			</td>
+			<td>Z17 旗舰版( 6GB+64GB 曜石黑)</td>
+			<td class="goodsprice">2499</td>
+			<td>
+				<div class="goodscounts">
+					<span class="cutCounts">-</span>
+					<input class="counts" type="button" value="1" />
+					<span class="addCounts">+</span>
+				</div>
+			</td>
+			<td></td>
+			<td style="text-align: center;>
+				<a href="#" title="删除" style="color: #727171;">x</a>
+				</td>
+		</tr>
+		<tr>
+			<td style="height: 100px;" colspan="2"></td>
+			<td colspan="2">
+				<ul id="ulFirst">
+					<li class="goodprice">商品总价：</li>
+					<li>共节省：</li>
+					<li class="goodprice">合计（不含运费）</li>
+				</ul>
+			</td>
+			<td colspan="2">
+				<ul id="ulSecond">
+					<li class="goodssum"></li>
+					<li>0</li>
+					<li class="goodssum"></li>
+				</ul>
+			</td>
+		</tr>
+		<tr>
+			<td id="footer" style="height: 70px;" colspan="6">
+				<div>
+					<a id="continueShopping" style="cursor: pointer;">继续购物</a>
+					<a id="payOffRightNow" style="cursor: pointer;">立即结算</a>
+				</div>
+			</td>
+		</tr>
+	</table>
 </div>
 
 <!-- section-two -->
@@ -161,11 +209,6 @@
 <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
 <script type="text/javascript">	
 	$(function(){
-		let s = new SlideShow($("#indexbg")[0],["img/indexbg2.jpg","img/indexbg1.jpg","img/indexbg3.jpg","img/indexbg4.jpg"],3000,"#555555","#e95f46");
-		s.initUI();
-		s.initEvent();
-		s.autoChange();
-		
 		var isInside=false;//isinside表示判断鼠标的位置是否在head内
 		$("#mobilePhone")[0].onmouseover=function(){
 			$("#zzc")[0].style.top="0px";
@@ -181,22 +224,32 @@
 		$("#zzc")[0].onmouseout=function(){//如果鼠标不在left上，则将false赋给isinside，执行isInside=false的结果
 			isInside=false;
 		}
+		var sum = $(".counts").val();
+		var danjia =$(".goodsprice").html();
+		$(".cutCounts").click(function(){
+			
+			sum--;
+			if(sum<=0){
+				sum=0;
+				$(".counts").val(sum);
+			}
+			$(".counts").val(sum);
+			$(".goodssum").html(danjia*sum);
+		});
+		$(".addCounts").click(function(){
+			sum++;
+			if(sum>=10){
+				sum=10;
+				$(".counts").val(sum);
+			}
+			$(".counts").val(sum);
+			
+			$(".goodssum").html(danjia*sum);
+		});
+		
 	});
-	$(window).scroll(function(){
-	    var sc=$(window).scrollTop();
-	    var rwidth=$(window).width()
-	   	if(sc>0){
-		    $("#goTopBtn").css("display","block");
-		    $("#goTopBtn").css("left",(rwidth-36)+"px")
-	   	}else{
-	   		$("#goTopBtn").css("display","none");
-	    }
- 	})
-	$("#goTopBtn").click(function(){
-	    var sc=$(window).scrollTop();
-	    $('body,html').animate({scrollTop:0},500);
-	})
+		
 	
 
-	
 </script>
+

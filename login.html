@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="Expires" content="0">
+		<meta http-equiv="Pragma" content="no-cache">
+		<meta http-equiv="Cache-control" content="no-cache">
+		<meta http-equiv="Cache" content="no-cache">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="dist/css/login.css">
+	</head>
+	<body>
+		<div id="loginBox">
+			<img src="img/loginLogo.png"/></br>
+			<a href="#"  class="loginWayOne">努比亚账号登录</a>|<a href="#" class="loginWayTwo">手机验证码登录</a>
+			<form>
+				<p>
+					<input id="username" type="text" placeholder="   邮箱/手机号码/用户名"/>
+					<span id="userMsg"></span>
+				</p>
+				<p>
+					<input id="pass" type="password" placeholder="   密码为6-16个字符（数字字母符号至少包含两种）"/>
+					<span id="passMsg"></span>
+				</p>
+				<p><input type="submit" id="loginBtn" value="立即登录"/></p>
+			</form>
+			<p id="singIn">
+				<a href="#" class="newNumber">注册新账号</a>|<a href="#" class="forget">忘记密码？</a>
+			</p>
+			<p id="method">
+				<span>其他方式登录：</span>
+				<a href="#" id="methodThree"></a>
+				<a href="#" id="methodFour"></a>	
+				<a href="#" id="methodTwo"></a>	
+				<a href="#" id="methodOne"></a>
+			</p>
+		</div>
+	</body>
+</html>
+<script type="text/javascript">
+	function $(id){
+	return document.getElementById(id)
+}
+	function checkAll(type,str){
+	switch(type){
+		case "username": var reg=/[\w{5,8},^\w+@\w+\.(com|cn)$,^1+\d{10}]/;break;
+		case "password": var reg=/\w{8,16}/;break;
+		case "tell": var reg=/^1+\d{10}/;break;
+	}
+	if(reg){
+		return reg.test(str);
+	}else{
+		return false;
+	}
+}
+	function checkAllAndUi(type,str,domObj){
+	
+	if(checkAll(type,str)){
+		domObj.style.color="green";
+		domObj.innerHTML="√";
+	}else{
+		domObj.style.color="red";
+		domObj.innerHTML="×";
+	}
+}	
+window.onload=function(){
+	$("username").onblur=function(){
+		checkAllAndUi("username",this.value,$("userMsg"));
+	}
+	$("pass").onblur=function(){
+		checkAllAndUi("password",this.value,$("passMsg"));
+	}
+}
+
+</script>
