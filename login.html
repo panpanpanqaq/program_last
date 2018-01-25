@@ -22,7 +22,7 @@
 					<input id="pass" type="password" placeholder="   密码为6-16个字符（数字字母符号至少包含两种）"/>
 					<span id="passMsg"></span>
 				</p>
-				<p><input type="submit" id="loginBtn" value="立即登录"/></p>
+				<p><input type="button" id="loginBtn" value="立即登录"/></p>
 			</form>
 			<p id="singIn">
 				<a href="#" class="newNumber">注册新账号</a>|<a href="#" class="forget">忘记密码？</a>
@@ -37,39 +37,60 @@
 		</div>
 	</body>
 </html>
+<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
 <script type="text/javascript">
-	function $(id){
-	return document.getElementById(id)
-}
-	function checkAll(type,str){
-	switch(type){
-		case "username": var reg=/[\w{5,8},^\w+@\w+\.(com|cn)$,^1+\d{10}]/;break;
-		case "password": var reg=/\w{8,16}/;break;
-		case "tell": var reg=/^1+\d{10}/;break;
-	}
-	if(reg){
-		return reg.test(str);
-	}else{
-		return false;
-	}
-}
-	function checkAllAndUi(type,str,domObj){
 	
-	if(checkAll(type,str)){
-		domObj.style.color="green";
-		domObj.innerHTML="√";
-	}else{
-		domObj.style.color="red";
-		domObj.innerHTML="×";
-	}
-}	
-window.onload=function(){
-	$("username").onblur=function(){
-		checkAllAndUi("username",this.value,$("userMsg"));
-	}
-	$("pass").onblur=function(){
-		checkAllAndUi("password",this.value,$("passMsg"));
-	}
-}
+//	function $(id){
+//	return document.getElementById(id)
+//}
+//	function checkAll(type,str){
+//	switch(type){
+//		case "username": var reg=/[\w{5,8},^\w+@\w+\.(com|cn)$,^1+\d{10}]/;break;
+//		case "password": var reg=/\w{8,16}/;break;
+//		case "tell": var reg=/^1+\d{10}/;break;
+//	}
+//	if(reg){
+//		return reg.test(str);
+//	}else{
+//		return false;
+//	}
+//}
+//	function checkAllAndUi(type,str,domObj){
+//	
+//	if(checkAll(type,str)){
+//		domObj.style.color="green";
+//		domObj.innerHTML="√";
+//	}else{
+//		domObj.style.color="red";
+//		domObj.innerHTML="×";
+//	}
+//}	
+//window.onload=function(){
+//	$("username").onblur=function(){
+//		checkAllAndUi("username",this.value,$("userMsg"));
+//	}
+//	$("pass").onblur=function(){
+//		checkAllAndUi("password",this.value,$("passMsg"));
+//	}
+//}
+
+$(function(){
+    $("#loginBtn").click(function (){
+    	$.ajax({
+            url:"logincheck.php",
+            type:"post",
+            data:{"username":$("#username").val(),"userpass":$("#pass").val()},
+            success:function (data) {
+                if(data=="1"){
+                	alert("登录成功！");
+                	location.href="index.html";
+                }else{
+                   alert("用户名或账号密码有误！");
+                   return false;
+                }
+            }
+        });
+	});
+})
 
 </script>
